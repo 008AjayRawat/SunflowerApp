@@ -4,16 +4,21 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.learn.mysunfloweapp.R
+import com.learn.mysunfloweapp.compose.garden.GardenScreen
+import com.learn.mysunfloweapp.compose.plantlist.PlantListScreen
 import com.learn.mysunfloweapp.data.Plant
 
 enum class SunflowerPage(
@@ -39,7 +44,9 @@ fun HomePagerScreen(
         val coroutineScope = rememberCoroutineScope()
 
         //Tab Row
-        TabRow(selectedTabIndex = pagerState.currentPage) {
+        TabRow(
+            selectedTabIndex = pagerState.currentPage
+        ) {
             pages.forEachIndexed { index, page ->
                 val title = stringResource(id = page.titleResId)
                 val icon = painterResource(id = page.drawableResId)
@@ -60,8 +67,26 @@ fun HomePagerScreen(
             }
         }
 
-
+        HorizontalPager(
+            pageCount = pages.size,
+            state = pagerState,
+            verticalAlignment = Alignment.Top
+        ) { index ->
+            when (pages[index]) {
+                SunflowerPage.MY_GARDEN -> {
+                    GardenScreen(
+                        modifier = modifier.fillMaxSize(),
+                        onAddPlantClick = {},
+                        onPlantClick = { onPlantClick(it.plant) }
+                    )
+                }
+                SunflowerPage.PLANT_LIST -> {
+                    PlantListScreen(
+                        onPlantClick = onPlantClick,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+            }
+        }
     }
-
-
 }
