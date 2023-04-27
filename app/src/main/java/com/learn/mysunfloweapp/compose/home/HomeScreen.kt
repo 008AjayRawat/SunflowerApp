@@ -20,6 +20,7 @@ import com.learn.mysunfloweapp.R
 import com.learn.mysunfloweapp.compose.garden.GardenScreen
 import com.learn.mysunfloweapp.compose.plantlist.PlantListScreen
 import com.learn.mysunfloweapp.data.Plant
+import kotlinx.coroutines.launch
 
 enum class SunflowerPage(
     @StringRes val titleResId: Int,
@@ -76,7 +77,11 @@ fun HomePagerScreen(
                 SunflowerPage.MY_GARDEN -> {
                     GardenScreen(
                         modifier = modifier.fillMaxSize(),
-                        onAddPlantClick = {},
+                        onAddPlantClick = {
+                            coroutineScope.launch {
+                                pagerState.scrollToPage(SunflowerPage.PLANT_LIST.ordinal)
+                            }
+                        },
                         onPlantClick = { onPlantClick(it.plant) }
                     )
                 }

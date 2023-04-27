@@ -35,7 +35,7 @@ class PlantListViewModel @Inject internal constructor(
 ) : ViewModel() {
 
     private val growZone: MutableStateFlow<Int> = MutableStateFlow(
-        savedStateHandle.get(GROW_ZONE_SAVED_STATE_KEY) ?: NO_GROW_ZONE
+        savedStateHandle[GROW_ZONE_SAVED_STATE_KEY] ?: NO_GROW_ZONE
     )
 
     val plants: LiveData<List<Plant>> = growZone.flatMapLatest { zone ->

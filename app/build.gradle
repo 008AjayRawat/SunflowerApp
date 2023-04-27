@@ -102,6 +102,10 @@ dependencies {
     //Glide Image Loading for Compose
     implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
 
+    //Work Manger
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+
 }
 
 // Allow references to generated code

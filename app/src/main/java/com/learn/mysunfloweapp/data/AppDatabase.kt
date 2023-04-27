@@ -22,7 +22,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.google.samples.apps.sunflower.utilities.DATABASE_NAME
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.learn.mysunfloweapp.utilities.DATABASE_NAME
+import com.learn.mysunfloweapp.utilities.PLANT_DATA_FILENAME
+import com.learn.mysunfloweapp.workers.SeedDatabaseWorker
+import com.learn.mysunfloweapp.workers.SeedDatabaseWorker.Companion.KEY_FILENAME
 
 /**
  * The Room database for this app
@@ -53,10 +59,10 @@ abstract class AppDatabase : RoomDatabase() {
                     object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-//                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
-//                                    .setInputData(workDataOf(KEY_FILENAME to PLANT_DATA_FILENAME))
-//                                    .build()
-//                            WorkManager.getInstance(context).enqueue(request)
+                            val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>()
+                                    .setInputData(workDataOf(KEY_FILENAME to PLANT_DATA_FILENAME))
+                                    .build()
+                            WorkManager.getInstance(context).enqueue(request)
                         }
                     }
                 )
