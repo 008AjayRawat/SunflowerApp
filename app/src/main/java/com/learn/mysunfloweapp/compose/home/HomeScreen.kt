@@ -54,7 +54,7 @@ fun HomePagerScreen(
 
                 Tab(
                     selected = pagerState.currentPage == index,
-                    onClick = {},
+                    onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                     text = { Text(text = title) },
                     icon = {
                         Icon(
